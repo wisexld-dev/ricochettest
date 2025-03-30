@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class AuthController extends Controller
 {
@@ -53,5 +55,30 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json(JWTAuth::user());
+    }
+
+    /**
+     * Retrieve the authenticated user.
+     *
+     * Attempts to retrieve the authenticated user by parsing the JWT token.
+     * Handles various exceptions related to the token and returns corresponding JSON responses.
+     *
+     * @return \Illuminate\Http\JsonResponse The authenticated user's data or error message.
+     */
+    public function getAuthenticatedUser()
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+        } catch (TokenExpiredException $e) {
+            return response()->json(['token_expired'], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json(['token_invalid'], 401);
+        } catch (JWTException $e) {
+            return response()->json(['token_absent'], 401);
+        }
+
+        return response()->json(compact('user'));
     }
 }

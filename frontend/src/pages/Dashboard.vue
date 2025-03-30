@@ -104,9 +104,9 @@
 
 <script>
 import api from '@/services/api'
-import BaseLayout from "../layouts/BaseLayout.vue";
-import Notification from "../components/Notification.vue";
-import { initEcho } from "../echo";
+import BaseLayout from "@/layouts/BaseLayout.vue";
+import Notification from "@/components/Notification.vue";
+import { initEcho } from "@/echo";
 
 export default {
   components: {

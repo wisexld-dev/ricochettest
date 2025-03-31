@@ -62,8 +62,8 @@ cd <diretorio-do-repositorio>
    ```
 6. Montar e subir container MySQL e phpMyAdmin (opcional)
 ```bash
-   cd ../backend
-   docker build . && docker-compose up -d
+   cd /docker
+   docker-compose up -d
 ```
 
 ## Como Utilizar o Projeto

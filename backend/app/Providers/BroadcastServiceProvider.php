@@ -14,6 +14,10 @@ class BroadcastServiceProvider extends ServiceProvider
     {
         Broadcast::routes();
 
+        Broadcast::channel('ricochet360-techassessment', function ($user) {
+            return !is_null($user);
+        });
+
         require base_path('routes/channels.php');
     }
 }
